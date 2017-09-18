@@ -9,6 +9,7 @@ const fs = require('fs')
 
 let api_keys = JSON.parse(fs.readFileSync('api_keys/api.json'))
 let token = api_keys["messenger_token"]
+let hub_verify_token = api_keys["hub_verify_token"]
 let covers = {}
 let bars = ['lion', 'clys', 'firehaus', 'joes', 'brothers', 'legends', 'murphys', 'kams']
 app.use(bodyparser.urlencoded({extended: false}))
@@ -21,7 +22,7 @@ app.get('/', function (req, res) {
 
 // Facebook auth
 app.get('/webhook/', function(req, res){
-  if(req.query['hub.verify_token'] === 'kandywall') {
+  if(req.query['hub.verify_token'] === hub_verify_token) {
     res.send(req.query['hub.challenge'])
   }
   else {
